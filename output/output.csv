@@ -1,0 +1,9 @@
+Customers,Hours/Week,W33,W34,W35,W36,W37,W38,W39,W40,W41,W42,W43,W44,W45,W46
+Customer 1,2,Member 1,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11
+Customer 1,2,Member 2,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12
+Customer 2,2,Member 3,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13
+Customer 2,2,Member 4,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14
+Customer 3,2,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11,Member 1
+Customer 4 + Customer 5,1 + 1,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12,Member 2
+Customer 6 + Customer 7,1 + 1,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13,Member 3,Member 7,Member 11,Member 1,Member 5,Member 9,Member 13,Member 3
+Customer 8 + Customer 9,1 + 1,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14,Member 4,Member 8,Member 12,Member 2,Member 6,Member 10,Member 14,Member 4

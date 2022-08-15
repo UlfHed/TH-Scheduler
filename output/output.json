@@ -1,0 +1,173 @@
+{
+    "slot_1": {
+        "assigned_member": [
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11"
+        ],
+        "customers": {
+            "Customer 1": 2
+        }
+    },
+    "slot_2": {
+        "assigned_member": [
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12"
+        ],
+        "customers": {
+            "Customer 1": 2
+        }
+    },
+    "slot_3": {
+        "assigned_member": [
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13"
+        ],
+        "customers": {
+            "Customer 2": 2
+        }
+    },
+    "slot_4": {
+        "assigned_member": [
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14"
+        ],
+        "customers": {
+            "Customer 2": 2
+        }
+    },
+    "slot_5": {
+        "assigned_member": [
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1"
+        ],
+        "customers": {
+            "Customer 3": 2
+        }
+    },
+    "slot_6": {
+        "assigned_member": [
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2"
+        ],
+        "customers": {
+            "Customer 4": 1,
+            "Customer 5": 1
+        }
+    },
+    "slot_7": {
+        "assigned_member": [
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3",
+            "Member 7",
+            "Member 11",
+            "Member 1",
+            "Member 5",
+            "Member 9",
+            "Member 13",
+            "Member 3"
+        ],
+        "customers": {
+            "Customer 6": 1,
+            "Customer 7": 1
+        }
+    },
+    "slot_8": {
+        "assigned_member": [
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4",
+            "Member 8",
+            "Member 12",
+            "Member 2",
+            "Member 6",
+            "Member 10",
+            "Member 14",
+            "Member 4"
+        ],
+        "customers": {
+            "Customer 8": 1,
+            "Customer 9": 1
+        }
+    }
+}
