@@ -91,42 +91,19 @@ def get_customer_assigned_slots(setup, customer_task_time):
     return output
 
 def get_team_assigned_slots(setup, team_members, slot_setup):
-    slot_idx = 0
-    member_idx = 0
-    run = True
-    while run == True:
-        # Loop back around stay within 0 ... 13
-        if member_idx >= len(team_members):
-            member_idx -= len(team_members)
-
-        # loop back around stay within 0 ... 13
-        if slot_idx >= setup[1]+setup[2]-1:
-            slot_idx -= (setup[1]+setup[2]-1)
-
-        # If we are looking at an active slot => add member
-        if slot_idx <= setup[1]-1:
-            slot_setup['slot_%s'%str(slot_idx+1)]['assigned_member'].append(team_members[member_idx])
-
-        # If inactive slot => still increment member idx to displace => variety
+    count = 0
+    drift_quotient = 1
+    while count < len(slot_setup): # n slots
+        if drift_quotient >= 1:
+            for member in team_members:
+                slot_setup['slot_%s'%str(count+1)]['assigned_member'].append(member)
+            drift_quotient -= 1
+            count += 1
         else:
-            member_idx += 1
-        member_idx += 1 # 1 member each slot => parallell iteration
-
-        # Exit => enough weeks + even hours for each user
-        tally = {}
-        for k, v in slot_setup.items():
-            for m in v['assigned_member']:
-                if m not in tally:
-                    tally[m] = 1
-                else:
-                    tally[m] += 1
-        if all(v > 5 for v in tally.values()):
-            for i in range(1, 100):
-                if all(v == i for v in tally.values()):
-                    run = False
-                    break
-        slot_idx += 1
-
+            drift_quotient += len(slot_setup) / (len(team_members) - len(slot_setup))
+        # rotate team_members
+        team_members.append(team_members[0])
+        team_members.pop(0)
     return slot_setup
 
 def write_json_file(fname, data):
