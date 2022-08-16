@@ -143,7 +143,7 @@ def get_html_table(data):
     # Header
     s_thead_inner = ''
     for i in range(len(data[0])):
-        s_thead_inner += '<th style="text-align: left;"><p>%s</p></th>'%data[0][i]
+        s_thead_inner += '<th style="text-align: center;"><p>%s</p></th>'%data[0][i]
     s_thead = '<thead><tr>%s</tr></thead>'%s_thead_inner
     # Body
     s_tbody_inner =''
@@ -152,10 +152,10 @@ def get_html_table(data):
         s_row = ''
         for col_idx in range(len(data[row_idx])):
             if col_idx < 2: # First two columns to not have checkbox
-                s_row += '<th style="text-align: left;">%s</th>'%data[row_idx][col_idx]
+                s_row += '<th style="text-align: center;">%s</th>'%data[row_idx][col_idx]
             else:
                 checkmark_id_inc += 1
-                s_row += '<td style="text-align: left;"><ac:task-list><ac:task><ac:task-id>%s</ac:task-id><ac:task-status>incomplete</ac:task-status><ac:task-body>%s</ac:task-body></ac:task></ac:task-list></td>'%(checkmark_id_inc, data[row_idx][col_idx])
+                s_row += '<td style="text-align: center;"><ac:task-list><ac:task><ac:task-id>%s</ac:task-id><ac:task-status>incomplete</ac:task-status><ac:task-body>%s</ac:task-body></ac:task></ac:task-list></td>'%(checkmark_id_inc, data[row_idx][col_idx])
         s_tbody_inner += '<tr>%s</tr>'%s_row
     s_tbody = '<tbody>%s</tbody>'%s_tbody_inner
     output = '<table class="relative-table wrapped" style="width: 100%%">%s%s</table>'%(s_thead, s_tbody)
