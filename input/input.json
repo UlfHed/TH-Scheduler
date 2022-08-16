@@ -1,0 +1,29 @@
+{
+    "Team": [
+        "Member 1",
+        "Member 2",
+        "Member 3",
+        "Member 4",
+        "Member 5",
+        "Member 6",
+        "Member 7",
+        "Member 8",
+        "Member 9",
+        "Member 10",
+        "Member 11",
+        "Member 12",
+        "Member 13",
+        "Member 14"
+    ] ,
+    "Customers": {
+        "Customer 1": 4,
+        "Customer 2": 4,
+        "Customer 3": 2,
+        "Customer 4": 1,
+        "Customer 5": 1,
+        "Customer 6": 1,
+        "Customer 7": 1,
+        "Customer 8": 1,
+        "Customer 9": 1
+    }
+}

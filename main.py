@@ -2,24 +2,13 @@ import json
 import datetime
 import csv
 
-def get_team_members(fname):
-    with open(fname) as f:
-        lines = [line.rstrip() for line in f]
-    return lines
-
-def get_customer_task_time(fname):
+def get_input_data(fname):
     with open(fname) as jf:
         data = json.load(jf)
     return data
 
-def get_total_h_tasks(customer_task_time):
-    sum = 0
-    for c in customer_task_time:
-        sum += customer_task_time[c]
-    return sum
-
 def get_available_slot_sizes(n_team_members, total_h_tasks):
-    max_h_slot_size = 5 # h
+    max_h_slot_size = 10 # h
     slot_size = 0
     runs = []
     for n_active_team_members in range(n_team_members, 0, -1):
@@ -140,12 +129,12 @@ def write_csv_file(fname, data):
         writer.writerows(data)
 
 def get_html_table(data):
-    # Header
+    # Table header
     s_thead_inner = ''
     for i in range(len(data[0])):
         s_thead_inner += '<th style="text-align: center;"><p>%s</p></th>'%data[0][i]
     s_thead = '<thead><tr>%s</tr></thead>'%s_thead_inner
-    # Body
+    # Table body
     s_tbody_inner =''
     checkmark_id_inc = 1000
     for row_idx in range(1, len(data)):
@@ -162,20 +151,18 @@ def get_html_table(data):
     return output
 
 def write_html_file(fname, data):
-    # HTML prettyprinted with BeautifulSoup
     from bs4 import BeautifulSoup as bs
     with open(fname, 'w') as f:
         f.write(bs(data, features='html.parser').prettify())
 
 def main():
-    team_members_fname = 'team_members.txt'
-    print('\n[+] Reading team member data <= input/%s'%team_members_fname)
-    team_members = get_team_members('input/%s'%team_members_fname) # member\nmember\nmember
+    input_data_fname = 'input.json'
+    print('\n[+] Reading input data file <= input/%s'%input_data_fname)
+    input_data = get_input_data('input/%s'%input_data_fname)
+    team_members = input_data['Team']
+    customer_task_time = input_data['Customers'] # {"cname": h, "cname": h}
+    total_h_tasks = sum(list(customer_task_time.values())) # Total hours of TH work / week
 
-    customer_task_time_fname = 'customer_task_time.json'
-    print('[+] Reading customer data <= input/%s'%customer_task_time_fname)
-    customer_task_time = get_customer_task_time('input/%s'%customer_task_time_fname) # {"cname": h, "cname": h}
-    total_h_tasks = get_total_h_tasks(customer_task_time) # Total hours of TH work / week
     start_week_number = get_current_week_number() # Start from the current week the script is ran
 
     # Find optimal setup slot h / member, n active members and n inactive members, n total slots
@@ -195,18 +182,14 @@ def main():
     print('[+] Writing JSON data => output/%s'%json_fname)
     write_json_file('output/%s'%json_fname, team_assigned_slots)
     
-    # Format csv data
-    csv_output = get_csv_format(team_assigned_slots, start_week_number)
-
     # Dump data to csv file
+    csv_output = get_csv_format(team_assigned_slots, start_week_number)
     csv_fname = 'output.csv'
     print('[+] Writing CSV data => output/%s'%csv_fname)
     write_csv_file('output/%s'%csv_fname, csv_output)
 
-    # Convert csv data to HTML table (confluence table)
-    html_table = get_html_table(csv_output)
-
     # Dump data to HTML file
+    html_table = get_html_table(csv_output)
     html_fname = 'output.html'
     print('[+] Writing HTML data => output/%s'%html_fname)
     write_html_file('output/%s'%html_fname, html_table)
