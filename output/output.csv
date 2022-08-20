@@ -2,8 +2,9 @@ Customers,Hours/Week,W33,W34,W35,W36,W37,W38,W39,W40,W41,W42,W43,W44,W45,W46
 Customer 1,2,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14
 Customer 1,2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2
 Customer 2,2,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4
-Customer 2,2,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6
-Customer 3,2,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8
-Customer 4 + Customer 5,1 + 1,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9
-Customer 6 + Customer 7,1 + 1,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11
-Customer 8 + Customer 9,1 + 1,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13
+Customer 2,2,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5
+Customer 3,2,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7
+Customer 5 + Customer 6,1 + 1,Member 9,Member 10,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8
+Customer 7 + Customer 8,1 + 1,Member 11,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10
+Customer 9 + Customer 10,1 + 1,Member 12,Member 13,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11
+Customer 4,1,Member 14,Member 1,Member 2,Member 3,Member 4,Member 5,Member 6,Member 7,Member 8,Member 9,Member 10,Member 11,Member 12,Member 13

@@ -1,25 +1,35 @@
 import json
 import datetime
 import csv
+import bs4
 
 def get_input_data(fname):
-    with open(fname) as jf:
-        data = json.load(jf)
+    with open(fname) as f:
+        data = json.load(f)
     return data
 
-def get_available_slot_sizes(n_team_members, total_h_tasks):
-    max_h_slot_size = 10 # h
-    slot_size = 0
+def get_slot_available_slot_setups(team_members, customer_task_time):
     runs = []
-    for n_active_team_members in range(n_team_members, 0, -1):
-        available_slots = []
-        for slot_size in range(1, max_h_slot_size):
-            if total_h_tasks % slot_size == 0 and n_active_team_members * slot_size == total_h_tasks:
-                available_slots.append(slot_size)
-        if len(available_slots) > 0:
-            n_off = n_team_members - n_active_team_members
-            runs.append([available_slots, n_active_team_members, n_off])
-    return runs # [[list of possible slot sizes], n members doing TH that week, n members not doing TH that week]
+    removed_customers = []
+    while True:
+        max_h_slot_size = 4 # hours
+        for n_active_team_members in range(len(team_members), 0, -1):
+            available_slots = []
+            for slot_size in range(1, max_h_slot_size):
+                total_h_tasks = sum(list(customer_task_time.values()))
+                if total_h_tasks % slot_size == 0 and n_active_team_members * slot_size == total_h_tasks:
+                    available_slots.append(slot_size)
+            if len(available_slots) > 0:
+                n_off = len(team_members) - n_active_team_members
+                runs.append([available_slots, n_active_team_members, n_off])
+        # End if we find setup
+        if len(runs) != 0:
+            return runs, removed_customers
+        # If we don't find a setup for the customers, remove the customer with the lowest h => have this separate slot
+        else:
+            lowest_customer_task_time = min(customer_task_time, key=customer_task_time.get) # Find customer with lowest h
+            removed_customers.append(lowest_customer_task_time) # Remember the customer removed
+            del customer_task_time[lowest_customer_task_time] # Remove the customer from customer_task_time
 
 def get_best_slot_setup(available_slot_sizes):
     # Find optimal setup, which is when lowest h / w / slot
@@ -53,47 +63,58 @@ def get_best_slot_setup(available_slot_sizes):
             option_idx += 1
         return available_slot_sizes[best_option_idx]
 
-def get_customer_assigned_slots(setup, customer_task_time):
+def get_slot_template(setup, removed_customers, customer_task_time):
     output = {}
+    # If there are customers to be put as separate slot => +1 active -1 inactive member
+    setup[1] += len(removed_customers)
+    setup[2] -= len(removed_customers)
+
     # Generate output json skeleton
     for n_slot in range(1, setup[1]+1):
-        output['slot_%s'%n_slot] = {'assigned_member': []}
-        output['slot_%s'%n_slot]['customers'] = {}
+        output["slot_%s"%n_slot] = {"assigned_member": []}
+        output["slot_%s"%n_slot]["customers"] = {}
+
     # Assign customers to slots
     slot_size = setup[0]
-    for i in range(0, len(output)):
+    for i in range(0, len(output)-len(removed_customers)):
         for customer, h in customer_task_time.items():
             if customer_task_time[customer] > 0:
                 # If the current set of customers in slot is at capacity => skip this customer
-                if sum(list(output['slot_%s'%str(i+1)]['customers'].values())) >= slot_size:
+                if sum(list(output["slot_%s"%str(i+1)]["customers"].values())) >= slot_size:
                     continue
                 else:
                     # If the customer we are trying to add has more hours than slot capacity => split it over multiple slots
                     if h > slot_size:
-                        output['slot_%s'%str(i+1)]['customers'][customer] = (h - slot_size)
+                        output["slot_%s"%str(i+1)]["customers"][customer] = (h - slot_size)
                         customer_task_time[customer] -= (h - slot_size)
                     else:
-                        output['slot_%s'%str(i+1)]['customers'][customer] = h
+                        output["slot_%s"%str(i+1)]["customers"][customer] = h
                         customer_task_time[customer] -= h
             else:
                 continue
+
+    # Add the lone customers
+    for rcustomer in removed_customers:
+        for slot in output:
+            if len(output[slot]["customers"]) == 0:
+                output[slot]["customers"][rcustomer] = CUSTOMER_TASK_TIME[rcustomer]
     return output
 
-def get_team_assigned_slots(setup, team_members, slot_setup):
+def get_team_assigned_slots(team_members, slot_template):
     count = 0
     drift_quotient = 1
-    while count < len(slot_setup): # n slots
+    while count < len(slot_template): # n slots
         if drift_quotient >= 1:
             for member in team_members:
-                slot_setup['slot_%s'%str(count+1)]['assigned_member'].append(member)
+                slot_template['slot_%s'%str(count+1)]['assigned_member'].append(member)
             drift_quotient -= 1
             count += 1
         else:
-            drift_quotient += len(slot_setup) / (len(team_members) - len(slot_setup))
+            drift_quotient += len(slot_template) / (len(team_members) - len(slot_template))
         # rotate team_members
         team_members.append(team_members[0])
         team_members.pop(0)
-    return slot_setup
+    return slot_template
 
 def write_json_file(fname, data):
     with open(fname, 'w', encoding='utf-8') as f:
@@ -156,26 +177,30 @@ def write_html_file(fname, data):
         f.write(bs(data, features='html.parser').prettify())
 
 def main():
-    input_data_fname = 'input.json'
-    print('\n[+] Reading input data file <= input/%s'%input_data_fname)
-    input_data = get_input_data('input/%s'%input_data_fname)
-    team_members = input_data['Team']
-    customer_task_time = input_data['Customers'] # {"cname": h, "cname": h}
-    total_h_tasks = sum(list(customer_task_time.values())) # Total hours of TH work / week
+    # Read input data
+    input_data_fname = "input.json"
+    print("\n[+] Reading input data file <= input/%s"%input_data_fname)
+    input_data = get_input_data("input/%s"%input_data_fname)
+    global TEAM_MEMBERS
+    TEAM_MEMBERS = input_data["Team"]
+    global CUSTOMER_TASK_TIME
+    CUSTOMER_TASK_TIME = input_data["Customers"]
 
-    start_week_number = get_current_week_number() # Start from the current week the script is ran
-
-    # Find optimal setup slot h / member, n active members and n inactive members, n total slots
-    print('[+] Looking for optimal setup...')
-    available_slot_sizes = get_available_slot_sizes(len(team_members), total_h_tasks) # Brute force possible slot sizes
+    # Find possible slot setups: [slot size, n active members, n inactive members]
+    print("[+] Looking for possible slot setups...")
+    customer_Task_time_modified = CUSTOMER_TASK_TIME.copy()
+    slot_available_slot_setups = get_slot_available_slot_setups(TEAM_MEMBERS, customer_Task_time_modified)
+    available_slot_sizes, removed_customers = slot_available_slot_setups[0], slot_available_slot_setups[1]
     best_slot_setup = get_best_slot_setup(available_slot_sizes) # Best = lowest h / w / member, O = [h slot size, n active, n inactive]
-    print('[+] Optimal setup found:\n\tSlot Size: %s Hours / Member | Active Members (slots): %s | Inactive Members (slots): %s | Total slots: %s' % (best_slot_setup[0], best_slot_setup[1], best_slot_setup[2], best_slot_setup[1]+best_slot_setup[2]))
-    
-    # Assign customers to slots => {slot_1: {assigned_member: [member week 1, member week 2], customers: {customer_1: h, customer_2: h}}, slot_2: {assigned_member = [member week 1, member week 2], customers: {customer_2: h, customer_3: h}}}
-    customer_assigned_slots = get_customer_assigned_slots(best_slot_setup, customer_task_time)
+    print("[+] Optimal setup found:\n\tSlot Size: %s Hours / Member | Active Members (slots): %s | Inactive Members (slots): %s | Total slots: %s" % (best_slot_setup[0], best_slot_setup[1], best_slot_setup[2], best_slot_setup[1]+best_slot_setup[2]))
+    print("[+] Customer(s) in single slot: %s"%", ".join(removed_customers)) if len(removed_customers) > 0 else False
+
+    # Create slot template
+    slot_template = get_slot_template(best_slot_setup, removed_customers, customer_Task_time_modified)
 
     # Assign team members to slots
-    team_assigned_slots = get_team_assigned_slots(best_slot_setup, team_members, customer_assigned_slots)
+    team_members_modified = TEAM_MEMBERS.copy()
+    team_assigned_slots = get_team_assigned_slots(team_members_modified, slot_template)
 
     # Dump the data to json file
     json_fname = 'output.json'
@@ -183,6 +208,7 @@ def main():
     write_json_file('output/%s'%json_fname, team_assigned_slots)
     
     # Dump data to csv file
+    start_week_number = get_current_week_number() # Start from the current week the script is ran
     csv_output = get_csv_format(team_assigned_slots, start_week_number)
     csv_fname = 'output.csv'
     print('[+] Writing CSV data => output/%s'%csv_fname)
@@ -194,5 +220,5 @@ def main():
     print('[+] Writing HTML data => output/%s'%html_fname)
     write_html_file('output/%s'%html_fname, html_table)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

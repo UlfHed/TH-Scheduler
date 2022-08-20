@@ -64,6 +64,7 @@
     },
     "slot_4": {
         "assigned_member": [
+            "Member 6",
             "Member 7",
             "Member 8",
             "Member 9",
@@ -76,14 +77,34 @@
             "Member 2",
             "Member 3",
             "Member 4",
-            "Member 5",
-            "Member 6"
+            "Member 5"
         ],
         "customers": {
             "Customer 2": 2
         }
     },
     "slot_5": {
+        "assigned_member": [
+            "Member 8",
+            "Member 9",
+            "Member 10",
+            "Member 11",
+            "Member 12",
+            "Member 13",
+            "Member 14",
+            "Member 1",
+            "Member 2",
+            "Member 3",
+            "Member 4",
+            "Member 5",
+            "Member 6",
+            "Member 7"
+        ],
+        "customers": {
+            "Customer 3": 2
+        }
+    },
+    "slot_6": {
         "assigned_member": [
             "Member 9",
             "Member 10",
@@ -101,12 +122,12 @@
             "Member 8"
         ],
         "customers": {
-            "Customer 3": 2
+            "Customer 5": 1,
+            "Customer 6": 1
         }
     },
-    "slot_6": {
+    "slot_7": {
         "assigned_member": [
-            "Member 10",
             "Member 11",
             "Member 12",
             "Member 13",
@@ -119,14 +140,15 @@
             "Member 6",
             "Member 7",
             "Member 8",
-            "Member 9"
+            "Member 9",
+            "Member 10"
         ],
         "customers": {
-            "Customer 4": 1,
-            "Customer 5": 1
+            "Customer 7": 1,
+            "Customer 8": 1
         }
     },
-    "slot_7": {
+    "slot_8": {
         "assigned_member": [
             "Member 12",
             "Member 13",
@@ -144,11 +166,11 @@
             "Member 11"
         ],
         "customers": {
-            "Customer 6": 1,
-            "Customer 7": 1
+            "Customer 9": 1,
+            "Customer 10": 1
         }
     },
-    "slot_8": {
+    "slot_9": {
         "assigned_member": [
             "Member 14",
             "Member 1",
@@ -166,8 +188,7 @@
             "Member 13"
         ],
         "customers": {
-            "Customer 8": 1,
-            "Customer 9": 1
+            "Customer 4": 1
         }
     }
 }
